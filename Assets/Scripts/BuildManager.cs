@@ -8,23 +8,18 @@ public class BuildManager : MonoBehaviour
     public GameObject turretToBuild;
     public GameObject standartTurretPrefab;
     public GameObject anotherTurretPrefab;
+    public GameObject thirdTurretPrefab;
 
     private void Awake()
     {
-        if (instance != null) // Kule oluþturma penceresi hiç açýlmadýysa.
+        if (instance != null) // Kule oluþturma penceresi önceden açýldýysa 
         {
             Debug.LogError("Birden fazla kule yapýcý çaðýramazsýn.");
             return;
         }
         instance = this;     // Her node için oluþturulan kule üretme nesnesinin bu sýnýftan üretildiðini belirtme.   
-    }
-
-    
-    private void Start()
-    {
-        turretToBuild = standartTurretPrefab; // Yapýlacak kulenin standart kule tipinin prefabý olmasýný saðla.
-    }
-    
+    }   
+   
     public GameObject GetTurretToBuild() // Oluþturma iþlemi için hangi prefabý kullanacaðý bilgisini çaðrýldýðý sýnýfa gönder.
     {
         return turretToBuild;
@@ -35,3 +30,11 @@ public class BuildManager : MonoBehaviour
     }
 
 }
+
+
+
+//public void Start()
+//{
+//    turretToBuild = standartTurretPrefab; // Yapýlacak kulenin standart kule tipinin prefabý olmasýný saðla.
+//}
+

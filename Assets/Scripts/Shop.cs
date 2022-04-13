@@ -3,6 +3,10 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     BuildManager buildManager;
+    private void Start()
+    {
+        buildManager = BuildManager.instance;
+    }
     public void PurchaseStandardTurret()
     {
         Debug.Log("Standard Turret alýndý.");
@@ -11,10 +15,11 @@ public class Shop : MonoBehaviour
     public void PurchaseSecondTurret()
     {
         Debug.Log("Misil Turret alýndý.");
-        buildManager.SetTurretToBuild(buildManager.anotherTurretPrefab); // Standart turreti seç.
+        buildManager.SetTurretToBuild(buildManager.anotherTurretPrefab); // 2. turreti seç.
     }
     public void PurchaseThirdTurret()
     {
         Debug.Log("Lazer Turret alýndý.");
+        buildManager.SetTurretToBuild(buildManager.thirdTurretPrefab); // 3. turreti seç
     }
 }

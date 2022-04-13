@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Node : MonoBehaviour
 {
@@ -13,18 +12,15 @@ public class Node : MonoBehaviour
 
     void Start()
     {
+        rend = GetComponent<Renderer>();
         buildManager = BuildManager.instance;
     }
     void OnMouseDown() // Týklama iþlemi yapýlan zeminde
     {
-        if (buildManager.GetTurretToBuild() == null)
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
             return;
-        GameObject turretToBuild = buildManager.GetTurretToBuild(); // Kule yapýcýdan bu bölgeye hangi kulenin yapýlacaðý bilgisini al ve oyun objesi olarak tut.
-        turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation); // Bu objeyi bu zeminin olduðu yerde oluþtur.
-    }
-
-    void OnMouseEnter()
-    {
+        }
         if (buildManager.GetTurretToBuild() == null)
             return;
         if (turret != null) // Kule varsa
@@ -32,6 +28,18 @@ public class Node : MonoBehaviour
             Debug.Log("Burada zaten bir kule var."); // Uyarý ver 
             return;
         }
+        GameObject turretToBuild = buildManager.GetTurretToBuild(); // Kule yapýcýdan bu bölgeye hangi kulenin yapýlacaðý bilgisini al ve oyun objesi olarak tut.
+        turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation); // Bu objeyi bu zeminin olduðu yerde oluþtur.
+    }
+
+    void OnMouseEnter()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (buildManager.GetTurretToBuild() == null)
+            return;       
     }
 
     //private void Start()
