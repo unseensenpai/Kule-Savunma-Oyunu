@@ -2,24 +2,29 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+
+    public TurretBlueprint standardTurret;
+    public TurretBlueprint missileLauncher;
+    public TurretBlueprint laserBeamer;
+
     BuildManager buildManager;
     private void Start()
     {
         buildManager = BuildManager.instance;
     }
-    public void PurchaseStandardTurret()
+    public void SelectStandardTurret()
     {
-        Debug.Log("Standard Turret alýndý.");
-        buildManager.SetTurretToBuild(buildManager.standartTurretPrefab); // Standart turreti seç.
+        Debug.Log("Standard Turret seçildi.");
+        buildManager.SelectTurretToBuild(standardTurret); // Standart turreti seç.
     }
-    public void PurchaseSecondTurret()
+    public void SelectMissileLauncher()
     {
-        Debug.Log("Misil Turret alýndý.");
-        buildManager.SetTurretToBuild(buildManager.anotherTurretPrefab); // 2. turreti seç.
+        Debug.Log("Misil Turret seçildi.");
+        buildManager.SelectTurretToBuild(missileLauncher); // misil turreti seç.
     }
-    public void PurchaseThirdTurret()
+    public void SelectLaserBeamer()
     {
-        Debug.Log("Lazer Turret alýndý.");
-        buildManager.SetTurretToBuild(buildManager.thirdTurretPrefab); // 3. turreti seç
+        Debug.Log("Lazer Turret seçildi.");
+        buildManager.SelectTurretToBuild(laserBeamer); // 3. turreti seç
     }
 }

@@ -6,22 +6,27 @@ public class Turret : MonoBehaviour
 {
     public Transform target;
 
-    [Header("Attributes")]
+    [Header("General")]
 
     public float range = 15f; // Turret menzili
+
+    [Header("Use Bullets")]
     public float fireRate = 1f; // Atýþ hýzý
     private float fireCountdown = 0f; // Sýradaki atýþ için sayaç
+    public GameObject bulletPrefab;
+
+    [Header("Use Bullets")]
+    public bool useLaser = false;
+    public LineRenderer lineRenderer;
 
     [Header("Unity Fields")]
-
     public string enemyTag = "Enemy";
     public Transform partToRotate; // Turretin dönmesi için referans
-    public float turnSpeed = 10f; // Dönüþ hýzý
-    public GameObject bulletPrefab;
+    public float turnSpeed = 10f; // Dönüþ hýzý  
     public Transform firePoint;
-    
 
-    
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -38,9 +43,9 @@ public class Turret : MonoBehaviour
         foreach (GameObject enemy in enemies) // Her düþman için
         {
             float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position); // En yakýn düþmanýn konumunu vektörel olarak tut.
-            if(distanceToEnemy < shortestDistance) // Eðer düþmanlar arasýnda bu düþman en yakýn düþmansa
+            if (distanceToEnemy < shortestDistance) // Eðer düþmanlar arasýnda bu düþman en yakýn düþmansa
             {
-               
+
                 shortestDistance = distanceToEnemy; // Artýk en yakýn düþmanýn uzaklýðýný atýyoruz.
                 nearestEnemy = enemy; // Ve düþmaný en yakýn düþman seçiyoruz.
             }
@@ -58,26 +63,54 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
-        if(target == null) // Eðer düþman yoksa kule sabit.
+        if (target == null) // Eðer düþman yoksa kule sabit.
         {
+            if (useLaser)
+            {
+                if (lineRenderer.enabled)
+                {
+                    lineRenderer.enabled = false;
+                }
+            }
             return;
         }
+        LockOnTarget();
 
+        if (useLaser) // Lazer kullanýyor mu?
+        {
+            Laser();
+        }
+        else
+        {
+            // Standart ateþ etme yeri
+            if (fireCountdown <= 0) // Ateþ etme süresi dolduysa
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate; // Farklý silahlarýn farklý atýþ hýzlarý olacaðý için ateþ etmenin bekleme süresini düzenleyebilmemizi saðlayan kýsým. 
+            }
+
+            fireCountdown -= Time.deltaTime; // Ateþ etme bekleme süresini zaman içinde azalt.
+        }
+    }
+
+    void Laser() // Lazer fonksiyonu çaðrýlýrsa
+    {
+        if (!lineRenderer.enabled) // Linerenderer aktif et.
+        {
+            lineRenderer.enabled = true;
+        }
+        lineRenderer.SetPosition(0, firePoint.position); // Rakibe kilitlensin.
+        lineRenderer.SetPosition(1, target.position);
+    }
+
+    void LockOnTarget()
+    {
         // Kulenin hedefe kilitlenmesi bölümü
         Vector3 direction = target.position - transform.position; // Düþman ile kule arasýndaki mesafeyi vektörel olarak tut.
         Quaternion lookRotation = Quaternion.LookRotation(direction); // Kule objesinin bakýþ açýsýný güncelle.
-        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles; 
+        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
         // Lerp sayesinde kulenin dönüþ animasyonu daha normalize. 
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f); // Kule nesnesini y ekseninde döndür.
-
-        // Ateþ etme bölümü
-        if(fireCountdown <= 0) // Ateþ etme süresi dolduysa
-        {
-            Shoot();
-            fireCountdown = 1f / fireRate; // Farklý silahlarýn farklý atýþ hýzlarý olacaðý için ateþ etmenin bekleme süresini düzenleyebilmemizi saðlayan kýsým. 
-        }
-
-        fireCountdown -= Time.deltaTime; // Ateþ etme bekleme süresini zaman içinde azalt.
     }
 
     void Shoot()
@@ -85,7 +118,7 @@ public class Turret : MonoBehaviour
         GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation); // Bir mermi üret atýþ baþlangýç noktasýnda ve bunun pozisyonunu tut.
         Bullet bullet = bulletGO.GetComponent<Bullet>(); // Mermi objesinin tüm methodlarýný kullanmak için nesne oluþtur.
 
-        if(bullet != null) // Eðer mermi varsa
+        if (bullet != null) // Eðer mermi varsa
         {
             bullet.Seek(target); // Hedef düþman ara
         }
