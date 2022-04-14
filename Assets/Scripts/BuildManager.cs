@@ -5,10 +5,24 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
-    public GameObject turretToBuild;
-    public GameObject standartTurretPrefab;
-    public GameObject anotherTurretPrefab;
-    public GameObject thirdTurretPrefab;
+    private TurretBlueprint turretToBuild;
+    public bool CanBuild { get { return turretToBuild != null; } }
+    public void BuildTurretOn(Node node)
+    {
+        if (PlayerStats.Money < turretToBuild.cost)
+        {
+            Debug.Log("kule inþaa etmek için yeterli para bulunmuyor!!");
+            return;
+        }
+
+        PlayerStats.Money -= turretToBuild.cost;
+
+        GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
+        node.turret = turret;
+
+        Debug.Log("Kule inþaa edildi! Kalan para:  " + PlayerStats.Money);
+    }
+
 
     private void Awake()
     {
@@ -18,13 +32,9 @@ public class BuildManager : MonoBehaviour
             return;
         }
         instance = this;     // Her node için oluþturulan kule üretme nesnesinin bu sýnýftan üretildiðini belirtme.   
-    }   
-   
-    public GameObject GetTurretToBuild() // Oluþturma iþlemi için hangi prefabý kullanacaðý bilgisini çaðrýldýðý sýnýfa gönder.
-    {
-        return turretToBuild;
     }
-    public void SetTurretToBuild(GameObject turret) // Hangi turreti üreteceðimizi seçtiðimiz method
+
+    public void SelectTurretToBuild(TurretBlueprint turret)
     {
         turretToBuild = turret;
     }

@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     private Transform target;
     public float speed = 70f; // Merminin hýzýný sabitle.
+    public float explosionRadius=0f; // Missil turretin patlama alaný
     public GameObject impactEffect;
 
     public void Seek(Transform _target) // Merminin yeni hedef aramasý için method.
@@ -31,6 +32,7 @@ public class Bullet : MonoBehaviour
             return;
         }
         transform.Translate(direction.normalized * distanceThisFrame, Space.World); // Eðer deðilse mermiyi hareket ettirmeye devam et.
+        transform.LookAt(target);
     }
 
     void HitTarget() // Düþmana vurma methodu
@@ -38,9 +40,41 @@ public class Bullet : MonoBehaviour
         GameObject effectInstance = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); 
         // Merminin patlama efektini, merminin olduðu pozisyonda bir oyun objesine çevirip çalýþtýr.
 
-        Destroy(effectInstance, 2f); // Bu efekti 2 saniye sonra kaldýr.
+        Destroy(effectInstance, 5f); // Bu efekti 2 saniye sonra kaldýr.
+
+        if (explosionRadius > 0f)
+        {
+            Explode();
+        }
+        else
+        {
+            Damage(target);
+        }
+
         //Debug.Log("Bir þeylere vurduk.");
-        Destroy(target.gameObject); // Düþmaný yoket.
         Destroy(gameObject); // Mermiyi yoket.
+    } 
+    void Explode()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.tag == "Enemy")
+            {
+                Damage(collider.transform);
+            }
+        }
     }
+    void Damage(Transform enemy)
+    {
+        Destroy(enemy.gameObject);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
 }

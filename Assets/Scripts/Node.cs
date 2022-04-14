@@ -4,10 +4,14 @@ using UnityEngine.EventSystems;
 public class Node : MonoBehaviour
 {
     public Color hoverColor; // Mouse zemin üstündeyken zemin rengi.
+    public Vector3 positionOffset; // Kulelerin zeminden belirlediðimiz yükseklikte oluþmasý için.
+
     private Renderer rend; // Çizilmiþ nesneleri taradýktan sonra tutmak için deðiþken.
     private Color startColor; // Zeminin ilk rengi.
-    private GameObject turret; // Daha önce kule oluþturulup oluþturmadýðý onaylama iþlemi için oyun objesi deðiþkeni.
-    public Vector3 positionOffset; // Kulelerin zeminden belirlediðimiz yükseklikte oluþmasý için.
+
+    [Header("Optional")]
+    public GameObject turret; // Daha önce kule oluþturulup oluþturmadýðý onaylama iþlemi için oyun objesi deðiþkeni.
+
     BuildManager buildManager; // Buildmanagerý çaðýr.
 
     void Start()
@@ -15,21 +19,24 @@ public class Node : MonoBehaviour
         rend = GetComponent<Renderer>();
         buildManager = BuildManager.instance;
     }
+
+    public Vector3 GetBuildPosition()
+    {
+        return transform.position + positionOffset;
+    }
+
     void OnMouseDown() // Týklama iþlemi yapýlan zeminde
     {
         if (EventSystem.current.IsPointerOverGameObject())
-        {
             return;
-        }
-        if (buildManager.GetTurretToBuild() == null)
+        if (!buildManager.CanBuild)
             return;
         if (turret != null) // Kule varsa
         {
             Debug.Log("Burada zaten bir kule var."); // Uyarý ver 
             return;
         }
-        GameObject turretToBuild = buildManager.GetTurretToBuild(); // Kule yapýcýdan bu bölgeye hangi kulenin yapýlacaðý bilgisini al ve oyun objesi olarak tut.
-        turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation); // Bu objeyi bu zeminin olduðu yerde oluþtur.
+        buildManager.BuildTurretOn(this);
     }
 
     void OnMouseEnter()
@@ -38,8 +45,8 @@ public class Node : MonoBehaviour
         {
             return;
         }
-        if (buildManager.GetTurretToBuild() == null)
-            return;       
+        if (!buildManager.CanBuild)
+            return;
     }
 
     //private void Start()

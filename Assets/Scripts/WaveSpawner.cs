@@ -21,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
             countdown = timeBetweenWaves; // Sýradaki dalga için countdownu 0dan 5 saniyeye çýkarýyoruz.
         }
         countdown -= Time.deltaTime; // Sayaç zaman içinde azalmalý.
-        waveCountdownText.text = Mathf.Round(countdown).ToString(); // Sayacý ekrana yazdýrmak için tutuyoruz.
+        waveCountdownText.text = ("SIRADAKÝ DALGA ÝÇÝN " + (Mathf.Floor(countdown).ToString()) + " SANÝYE");
     }
 
     IEnumerator SpawnWave()

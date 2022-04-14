@@ -380,8 +380,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8887872323211474169, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
       propertyPath: m_Name
-      value: SecondTurretItem
+      value: MissleLauncherItem
       objectReference: {fileID: 0}
+    - target: {fileID: 8887872323211474173, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 61d140b2db6acbe479c1679ae2b87f0d, type: 3}
     - target: {fileID: 8887872323211474174, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -412,7 +416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8887872323211474174, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PurchaseSecondTurret
+      value: PurchaseMissileLauncher
       objectReference: {fileID: 0}
     - target: {fileID: 8887872323211474174, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -437,6 +441,14 @@ PrefabInstance:
     - target: {fileID: 8887872323211474174, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887872323211474175, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
+      propertyPath: m_PreferredWidth
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887872323211474175, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
+      propertyPath: m_PreferredHeight
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2fabb8cf8c31ae4fafcee9a2b722926, type: 3}
