@@ -6,8 +6,10 @@ public class Bullet : MonoBehaviour
 {
     private Transform target;
     public float speed = 70f; // Merminin hýzýný sabitle.
-    public float explosionRadius=0f; // Missil turretin patlama alaný
+    public float explosionRadius=0f;
     public GameObject impactEffect;
+    public int damage = 50;
+    
 
     public void Seek(Transform _target) // Merminin yeni hedef aramasý için method.
     {
@@ -50,9 +52,9 @@ public class Bullet : MonoBehaviour
         {
             Damage(target);
         }
-
         //Debug.Log("Bir þeylere vurduk.");
         Destroy(gameObject); // Mermiyi yoket.
+
     } 
     void Explode()
     {
@@ -66,15 +68,19 @@ public class Bullet : MonoBehaviour
             }
         }
     }
-    void Damage(Transform enemy)
-    {
-        Destroy(enemy.gameObject);
-    }
-
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 
+    void Damage(Transform enemy)
+    {
+        Enemy e = enemy.GetComponent<Enemy>();
+
+        if (e != null)
+        {
+            e.TakeDamage(damage);
+        }
+    }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
+    private Enemy targetEnemy;
 
     [Header("General")]
 
@@ -15,9 +16,13 @@ public class Turret : MonoBehaviour
     private float fireCountdown = 0f; // Sýradaki atýþ için sayaç
     public GameObject bulletPrefab;
 
-    [Header("Use Bullets")]
+    [Header("Use Laser")]
     public bool useLaser = false;
+    public int damageOverTime = 30;
     public LineRenderer lineRenderer;
+    public ParticleSystem impactEffect;
+    public Light impactLight;
+    public float slowRate = 0.2f;
 
     [Header("Unity Fields")]
     public string enemyTag = "Enemy";
@@ -54,6 +59,7 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null && shortestDistance <= range) // En yakýn düþman varsa ve range içindeyse (gizmos rangende)
         {
             target = nearestEnemy.transform; // En yakýn düþmaný hedef belirle.
+            targetEnemy = nearestEnemy.GetComponent<Enemy>(); // Lazer için düþmaný belirleme.
         }
         else
         {
@@ -70,6 +76,8 @@ public class Turret : MonoBehaviour
                 if (lineRenderer.enabled)
                 {
                     lineRenderer.enabled = false;
+                    impactLight.enabled = false;
+                    impactEffect.Stop(); // Eðer lazer sistemi aktif deðilse partikülleri durdur.
                 }
             }
             return;
@@ -95,12 +103,22 @@ public class Turret : MonoBehaviour
 
     void Laser() // Lazer fonksiyonu çaðrýlýrsa
     {
+        targetEnemy.TakeDamage(damageOverTime * Time.deltaTime); // Düþmana zamanla hasar aldýr.
+        targetEnemy.Slow(slowRate); // Düþmaný yavaþlat.
+
         if (!lineRenderer.enabled) // Linerenderer aktif et.
         {
             lineRenderer.enabled = true;
+            impactEffect.Play(); // Lazer aktifse partikülleri etkinleþtir.
+            impactLight.enabled = true;
         }
         lineRenderer.SetPosition(0, firePoint.position); // Rakibe kilitlensin.
         lineRenderer.SetPosition(1, target.position);
+
+        Vector3 dir = firePoint.position - target.position;
+        impactEffect.transform.position = target.position + dir.normalized * 0.5f; // Efektlerin düþmana temas noktasýnda çýkmasýný istiyoruz.
+                                                                                   // O yüzden turretin baktýðý noktadan 0.5 birim öteliyoruz.
+        impactEffect.transform.rotation = Quaternion.LookRotation(dir);
     }
 
     void LockOnTarget()
