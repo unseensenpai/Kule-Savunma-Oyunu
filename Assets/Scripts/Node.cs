@@ -5,6 +5,7 @@ public class Node : MonoBehaviour
 {
     public Color hoverColor; // Mouse zemin üstündeyken zemin rengi.
     public Vector3 positionOffset; // Kulelerin zeminden belirlediðimiz yükseklikte oluþmasý için.
+    public Color notEnoughMoneyColor;
 
     private Renderer rend; // Çizilmiþ nesneleri taradýktan sonra tutmak için deðiþken.
     private Color startColor; // Zeminin ilk rengi.
@@ -45,8 +46,21 @@ public class Node : MonoBehaviour
         {
             return;
         }
+
         if (!buildManager.CanBuild)
+        {
             return;
+        }
+
+        if (buildManager.HasMoney)
+        {
+            rend.material.color = hoverColor;
+        }
+        else
+        {
+            rend.material.color = notEnoughMoneyColor;
+        }
+        
     }
 
     //private void Start()

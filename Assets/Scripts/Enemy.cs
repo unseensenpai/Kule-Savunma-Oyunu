@@ -4,35 +4,34 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 10f;
-
-    private Transform target;
-    private int wavepointIndex = 0;
+    public float startSpeed = 10f;
+    [HideInInspector]
+    public float speed;
+    public float health = 100;   
+    public int worth = 50;
 
     private void Start()
     {
-        target = Waypoints.points[0]; // Waypointlerden ilkini hedef olarak belirle.
+        speed = startSpeed;
     }
-
-    private void Update()
+    public void TakeDamage(float amount)
     {
-        Vector3 direction = target.position - transform.position; // Waypoint ile düþman arasýndaki mesafeyi vektörel olarak tutuyoruz.
-        transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World); // Düþmaný normalize(birer birim ilerleyecek) þekilde hareket ettiriyoruz.
+        health -= amount;
 
-        if (Vector3.Distance(transform.position, target.position) <= 0.2f) // Düþman waypointe 0.2 birimden daha yakýnsa yeni waypointi bulmasýný saðlýyoruz.
+        if(health <= 0)
         {
-            GetNextWaypoint();
+            Die();
         }
     }
 
-    void GetNextWaypoint()
+    void Die()
     {
-        if(wavepointIndex >= Waypoints.points.Length - 1) // Son waypointe gelene kadar
-        {
-            Destroy(gameObject); // Önceki waypointi yoket.
-            return;
-        }
-        wavepointIndex++;
-        target = Waypoints.points[wavepointIndex]; // Yeni waypointi hedef belirle.
+        PlayerStats.Money += worth;
+        Destroy(gameObject);
+    }    
+    public void Slow(float rate)
+    {
+
+        speed = startSpeed * (1f - rate);
     }
 }
