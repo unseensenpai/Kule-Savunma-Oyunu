@@ -108,17 +108,17 @@ public class Turret : MonoBehaviour
 
         if (!lineRenderer.enabled) // Linerenderer aktif et.
         {
-            lineRenderer.enabled = true;
+            lineRenderer.enabled = true; // Lazeri aktif et
             impactEffect.Play(); // Lazer aktifse partikülleri etkinleþtir.
-            impactLight.enabled = true;
+            impactLight.enabled = true; // Glowu aktif et
         }
-        lineRenderer.SetPosition(0, firePoint.position); // Rakibe kilitlensin.
-        lineRenderer.SetPosition(1, target.position);
+        lineRenderer.SetPosition(0, firePoint.position); // Linerenderer 1. pozisyon
+        lineRenderer.SetPosition(1, target.position); // Linerenderer 2. pozisyon
 
         Vector3 dir = firePoint.position - target.position;
         impactEffect.transform.position = target.position + dir.normalized * 0.5f; // Efektlerin düþmana temas noktasýnda çýkmasýný istiyoruz.
-                                                                                   // O yüzden turretin baktýðý noktadan 0.5 birim öteliyoruz.
-        impactEffect.transform.rotation = Quaternion.LookRotation(dir);
+                                                                                   // O yüzden turretin baktýðý noktadan 0.5 birim öteliyoruz. Turretin scalei 1 olduðu için.
+        impactEffect.transform.rotation = Quaternion.LookRotation(dir); // Efekti turrete bakacak þekilde döndür düþman üzerinde.
     }
 
     void LockOnTarget()
