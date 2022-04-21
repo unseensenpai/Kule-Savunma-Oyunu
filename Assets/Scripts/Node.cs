@@ -17,8 +17,9 @@ public class Node : MonoBehaviour
 
     void Start()
     {
-        rend = GetComponent<Renderer>();
         buildManager = BuildManager.instance;
+        rend = GetComponent<Renderer>(); // Çizilmiþ tüm nodelarý tara.
+        startColor = rend.material.color; // Baþlangýçtaki renklerini tut.
     }
 
     public Vector3 GetBuildPosition()
@@ -42,6 +43,7 @@ public class Node : MonoBehaviour
 
     void OnMouseEnter()
     {
+        rend.material.color = hoverColor; // Mouse zemin üstündeyse rengi deðiþtir.
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -73,8 +75,8 @@ public class Node : MonoBehaviour
     //    rend.material.color = hoverColor; // Mouse zemin üstündeyse rengi deðiþtir.
     //}
 
-    //private void OnMouseExit()
-    //{
-    //    rend.material.color = startColor; // Mouse zemin üstünden çýktýysa rengi eski haline getir.
-    //}
+    private void OnMouseExit()
+    {
+        rend.material.color = startColor; // Mouse zemin üstünden çýktýysa rengi eski haline getir.
+    }
 }
