@@ -21,15 +21,12 @@ public class GameManagers : MonoBehaviour
             return;
         }
 
-
-
         if(PlayerStats.Lives <= 0)
         {
             EndGame();
         }
     }
-
-    void EndGame()
+    public void EndGame()
     {
         GameIsOver = true;
         gameOverUI.SetActive(true);

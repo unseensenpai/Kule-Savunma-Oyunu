@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,8 +11,12 @@ public class Node : MonoBehaviour
     private Renderer rend; // Çizilmiþ nesneleri taradýktan sonra tutmak için deðiþken.
     private Color startColor; // Zeminin ilk rengi.
 
-    [Header("Optional")]
+    [HideInInspector]
     public GameObject turret; // Daha önce kule oluþturulup oluþturmadýðý onaylama iþlemi için oyun objesi deðiþkeni.
+    [HideInInspector]
+    public TurretBlueprint turretBlueprint;
+    [HideInInspector]
+    public bool isUpgraded = false;
 
     BuildManager buildManager; // Buildmanagerý çaðýr.
 
@@ -31,14 +36,63 @@ public class Node : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-        if (!buildManager.CanBuild)
-            return;
+        
         if (turret != null) // Kule varsa
         {
-            Debug.Log("Burada zaten bir kule var."); // Uyarý ver 
+            buildManager.SelectNode(this);
             return;
         }
-        buildManager.BuildTurretOn(this);
+
+        if (!buildManager.CanBuild)
+            return;
+
+        BuildTurret(buildManager.GetTurretToBuild());
+    }
+
+    void BuildTurret(TurretBlueprint blueprint)
+    {
+        if (PlayerStats.Money < blueprint.cost)
+        {
+            Debug.Log("Kule inþa etmek için yeterli para bulunmuyor!");
+            return;
+        }
+        GameObject effect = (GameObject)Instantiate(buildManager.buildEffect, GetBuildPosition(), Quaternion.identity);
+        Destroy(effect, 5f);
+        PlayerStats.Money -= blueprint.cost;
+
+        GameObject _turret = (GameObject)Instantiate(blueprint.prefab, GetBuildPosition(), Quaternion.identity);
+        turret = _turret;
+        turretBlueprint = blueprint;
+        Debug.Log("Kule inþa edildi!");
+    }
+    public void UpgradeTurret()
+    {
+        if (PlayerStats.Money < turretBlueprint.upgradeCost)
+        {
+            Debug.Log("Yükseltmek için yeterli para bulunmuyor!");
+            return;
+        }
+
+        PlayerStats.Money -= turretBlueprint.upgradeCost;
+
+        // Eski kuleyi sil
+        Destroy(turret);
+
+        // Yeni yükseltilmiþ kuleyi ekle
+        GameObject _turret = (GameObject)Instantiate(turretBlueprint.upgradedPrefab, GetBuildPosition(), Quaternion.identity);
+        turret = _turret;
+        isUpgraded = true;
+        Debug.Log("Kule yükseltildi!");
+    }
+
+    public void SellTurret()
+    {
+        PlayerStats.Money += turretBlueprint.GetSellAmount();
+        //Spawn effect eklenecek.
+        GameObject effect = (GameObject)Instantiate(buildManager.sellEffect, GetBuildPosition(), Quaternion.identity);
+        Destroy(effect, 5f);
+        Destroy(turret);
+        turretBlueprint = null;
     }
 
     void OnMouseEnter()
@@ -65,6 +119,12 @@ public class Node : MonoBehaviour
         
     }
 
+    private void OnMouseExit()
+    {
+        rend.material.color = startColor; // Mouse zemin üstünden çýktýysa rengi eski haline getir.
+    }
+
+
     //private void Start()
     //{
     //    rend = GetComponent<Renderer>(); // Çizilmiþ tüm nodelarý tara.
@@ -75,8 +135,7 @@ public class Node : MonoBehaviour
     //    rend.material.color = hoverColor; // Mouse zemin üstündeyse rengi deðiþtir.
     //}
 
-    private void OnMouseExit()
-    {
-        rend.material.color = startColor; // Mouse zemin üstünden çýktýysa rengi eski haline getir.
-    }
+    //GameObject effect = (GameObject)Instantiate(BuildManager.buildEffect, GetBuildPosition(), Quaternion.identity);
+    //Destroy(effect, 5f);
+
 }

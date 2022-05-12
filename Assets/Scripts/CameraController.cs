@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public bool doMove = true;
+   // public bool doMove = true;
     public float panSpeed = 30f; // Panaromik görüntünün hýzý
     public float panBorder = 20f; // Kameranýn hareket etmesi için trigger uzunluðu
     public float scrollSpeed = 5f; // Scroll hýzý
@@ -22,11 +22,11 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) // ESCye basýldýðýnda kamerayý kilitle
+      /*  if (Input.GetKeyDown(KeyCode.Escape)) // ESCye basýldýðýnda kamerayý kilitle
             doMove = !doMove;
 
         if (!doMove)
-            return;
+            return; */
 
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorder) // Mouse pozisyonu y ekseninde ekranýn uzunluðunun 10 piksel yakýnýna girdiyse kamerayý hareket ettir.
         {

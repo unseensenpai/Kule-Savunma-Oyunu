@@ -6,10 +6,11 @@ public class Bullet : MonoBehaviour
 {
     private Transform target;
     public float speed = 70f; // Merminin hýzýný sabitle.
-    public float explosionRadius=0f;
+    public float explosionRadius = 0f;
     public GameObject impactEffect;
     public int damage = 50;
-    
+    Enemy enemyObject = new Enemy();
+
 
     public void Seek(Transform _target) // Merminin yeni hedef aramasý için method.
     {
@@ -18,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if(target == null) // Eðer hedef düþman kalmadýysa
+        if (target == null) // Eðer hedef düþman kalmadýysa
         {
             Destroy(gameObject); // Mermiyi yoket.
             return;
@@ -28,9 +29,13 @@ public class Bullet : MonoBehaviour
 
         float distanceThisFrame = speed * Time.deltaTime; // Merminin zaman içerisinde sabit hýzla her framede hareket edebilmesi için deðiþkene ata.
 
-        if(direction.magnitude <= distanceThisFrame) // Eðer merminin hýzý, vektör olarak tutulan düþmanýn uzaklýðýndan daha hýzlýysa
+        if (direction.magnitude <= distanceThisFrame) // Eðer merminin hýzý, vektör olarak tutulan düþmanýn uzaklýðýndan daha hýzlýysa
         {
             HitTarget(); // Düþmana vurma methodunu çalýþtýr.
+
+            if (enemyObject.startHealth <= 1)
+            {
+            }
             return;
         }
         transform.Translate(direction.normalized * distanceThisFrame, Space.World); // Eðer deðilse mermiyi hareket ettirmeye devam et.
@@ -39,10 +44,10 @@ public class Bullet : MonoBehaviour
 
     void HitTarget() // Düþmana vurma methodu
     {
-        GameObject effectInstance = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); 
-        // Merminin patlama efektini, merminin olduðu pozisyonda bir oyun objesine çevirip çalýþtýr.
 
-        Destroy(effectInstance, 5f); // Bu efekti 2 saniye sonra kaldýr.
+        GameObject effectInstance = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
+        // Merminin patlama efektini, merminin olduðu pozisyonda bir oyun objesine çevirip çalýþtýr.
+        Destroy(effectInstance, 5f); // Bu efekti 2 saniye sonra kaldýr. }
 
         if (explosionRadius > 0f)
         {
@@ -52,10 +57,11 @@ public class Bullet : MonoBehaviour
         {
             Damage(target);
         }
-        //Debug.Log("Bir þeylere vurduk.");
         Destroy(gameObject); // Mermiyi yoket.
+        //Debug.Log("Bir þeylere vurduk.");
+        //Destroy(gameObject); // Mermiyi yoket.
 
-    } 
+    }
     void Explode()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);

@@ -5061,11 +5061,11 @@ MonoBehaviour:
   fireRate: 1
   bulletPrefab: {fileID: 0}
   useLaser: 1
-  damageOverTime: 30
+  damageOverTime: 35
   lineRenderer: {fileID: 4635014011993394435}
   impactEffect: {fileID: 5099367644109660849}
   impactLight: {fileID: 1002833502172171683}
-  slowRate: 0.2
+  slowRate: 0.15
   enemyTag: Enemy
   partToRotate: {fileID: 1981000227509789954}
   turnSpeed: 10

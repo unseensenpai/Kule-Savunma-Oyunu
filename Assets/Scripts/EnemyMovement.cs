@@ -39,7 +39,15 @@ public class EnemyMovement : MonoBehaviour
 
     void EndPath()
     {
-        PlayerStats.Lives--;
+        if (enemy.worth == 2000)
+        {
+            PlayerStats.Lives -= 10;
+        }
+        else
+        {
+            PlayerStats.Lives--;
+        }       
+        WaveSpawner.EnemiesAlive--;
         Destroy(gameObject); // Önceki waypointi yoket.
     }
 }
