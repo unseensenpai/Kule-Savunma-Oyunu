@@ -50,6 +50,7 @@ public class WaveSpawner : MonoBehaviour
         Wave wave = waves[waveIndex];
 
         Debug.Log("Wave Incoming!");
+
         for (int i = 0; i < wave.amount; i++)              // 6 WAVE - 1. slow 2.normal 3.normal 4.hýzlý 5.hýzlý 6.boss  -- WAVE AMOUNT = 20 , WAVES = 0-5 - WAVEINDEX - 6 , WAVE LENGHT 6
         {
             SpawnEnemy(wave.enemy);
@@ -59,7 +60,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveIndex == waves.Length+1)
         {
-            Debug.Log(" LEVEL 1 TAMAMLANDI!");
+            Debug.Log(" LEVEL 1 TAMAMLANDI! ");
             this.enabled = false;
             GameManagers.GameIsOver = true;
             GameManagers gm = new GameManagers();

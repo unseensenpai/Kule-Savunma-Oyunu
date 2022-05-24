@@ -18,7 +18,7 @@ public class GameManagers : MonoBehaviour
     {
         if (GameIsOver)
         {
-            return;
+            return;            
         }
 
         if(PlayerStats.Lives <= 0)
@@ -30,5 +30,7 @@ public class GameManagers : MonoBehaviour
     {
         GameIsOver = true;
         gameOverUI.SetActive(true);
+        PlayerStats.prevLives = 10;
+        PlayerStats.prevMoney = 1000;
     }
 }

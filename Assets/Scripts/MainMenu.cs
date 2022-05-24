@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string levelToLoad = "MainLevel";
+    public string levelToLoad = "LevelSelect";
     public bool gameRestarted = false;
     public SceneFader sceneFader;
 
@@ -15,12 +15,16 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Time.timeScale = 1f;
+            PlayerStats.Lives = 10;
+            PlayerStats.Money = 1000;
         }
         else
         {
             // sceneFader.FadeTo(levelToLoad);
             SceneManager.LoadScene(levelToLoad);
             gameRestarted = true;
+            PlayerStats.Lives = PlayerStats.prevLives;
+            PlayerStats.Money = PlayerStats.prevMoney;
         }            
     }
 

@@ -1106,6 +1106,10 @@ PrefabInstance:
       propertyPath: sceneFader
       value: 
       objectReference: {fileID: 1170585091}
+    - target: {fileID: 863982222909269118, guid: 2bccf8517e31a7b4497b852f8355530c, type: 3}
+      propertyPath: levelToLoad
+      value: LevelSelect
+      objectReference: {fileID: 0}
     - target: {fileID: 863982222909269119, guid: 2bccf8517e31a7b4497b852f8355530c, type: 3}
       propertyPath: m_Name
       value: MainMenu
