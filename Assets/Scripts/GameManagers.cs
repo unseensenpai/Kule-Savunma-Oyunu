@@ -7,12 +7,17 @@ public class GameManagers : MonoBehaviour
 
     public static bool GameIsOver;
     public GameObject gameOverUI;
+    public GameObject completeLevelUI;
+
 
     void Start()
     {
-        GameIsOver = false;    
+        GameIsOver = false;
     }
-
+    private void Awake()
+    {
+        completeLevelUI.SetActive(false);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -30,7 +35,11 @@ public class GameManagers : MonoBehaviour
     {
         GameIsOver = true;
         gameOverUI.SetActive(true);
-        PlayerStats.prevLives = 10;
-        PlayerStats.prevMoney = 1000;
+    }
+
+    public void WinLevel()
+    {   
+        completeLevelUI.SetActive(true);
+        GameIsOver = true;
     }
 }

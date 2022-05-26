@@ -16,25 +16,43 @@ public class WaveSpawner : MonoBehaviour
     public static int EnemiesAlive = 0; // Düþmanlar öldüðünde sýradaki wavei çaðýrmak için sabit tutulan deðiþkenimiz. 
     public WaveSpawnCanvas WaveSpawnImage;
     public string returnToMenu = "MainMenu";
+    public GameManagers gameManager;
 
     private void Update() 
     {
-        if (EnemiesAlive>0) // Düþman varsa
+        if (EnemiesAlive > 0) // Düþman varsa
         {
             WaveSpawnImage.FadeOut();
             return; // Hiçbir þey yapmadan geri dön.
         }
-        if (EnemiesAlive <= 0)
+        if (EnemiesAlive < 1 && waveIndex < waves.Length)
         {
             WaveSpawnImage.FadeIn();
         }
-        if (countdown <= 0f) // Eðer doðma süresi 0ýn altýna düþtüyse
+
+        if (waveIndex == waves.Length)
         {
 
-            StartCoroutine(SpawnWave()); // Spawn wave komutunu çalýþtýr ama asenkron olarak.
-            countdown = timeBetweenWaves; // Sýradaki dalga için countdownu 0dan 5 saniyeye çýkarýyoruz.
-            return;
+            Debug.Log("Geliyor mu?");
+            gameManager.WinLevel();
+            this.enabled = false;
         }
+
+        if (countdown <= 0f) // Eðer doðma süresi 0ýn altýna düþtüyse
+        {
+            if (GameManagers.GameIsOver == false)
+            {
+                StartCoroutine(SpawnWave()); // Spawn wave komutunu çalýþtýr ama asenkron olarak.
+                countdown = timeBetweenWaves; // Sýradaki dalga için countdownu 0dan 5 saniyeye çýkarýyoruz.
+                return;
+            }
+            else
+            {
+                gameManager.WinLevel();
+                return;
+            }            
+        }
+
         countdown -= Time.deltaTime; // Sayaç zaman içinde azalmalý.
         countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
         waveCountdownText.text = string.Format("{0:00.00}", countdown);        
@@ -51,6 +69,8 @@ public class WaveSpawner : MonoBehaviour
 
         Debug.Log("Wave Incoming!");
 
+        // EnemiesAlive = wave.amount;
+
         for (int i = 0; i < wave.amount; i++)              // 6 WAVE - 1. slow 2.normal 3.normal 4.hýzlý 5.hýzlý 6.boss  -- WAVE AMOUNT = 20 , WAVES = 0-5 - WAVEINDEX - 6 , WAVE LENGHT 6
         {
             SpawnEnemy(wave.enemy);
@@ -58,14 +78,7 @@ public class WaveSpawner : MonoBehaviour
         }
         waveIndex++;
 
-        if (waveIndex == waves.Length+1)
-        {
-            Debug.Log(" LEVEL 1 TAMAMLANDI! ");
-            this.enabled = false;
-            GameManagers.GameIsOver = true;
-            GameManagers gm = new GameManagers();
-            gm.EndGame();
-        }
+       
     }
 
     void SpawnEnemy(GameObject enemy)

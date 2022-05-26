@@ -10,7 +10,7 @@ public class SceneFader : MonoBehaviour
     public AnimationCurve curve;
     private void Start()
     {
-        StartCoroutine(FadeIn()) ;
+        StartCoroutine(FadeIn());
     }
 
     public void FadeTo(string scene)
