@@ -33,8 +33,8 @@ public class GameManagers : MonoBehaviour
     }
     public void EndGame()
     {
-        GameIsOver = true;
         gameOverUI.SetActive(true);
+        GameIsOver = true;        
     }
 
     public void WinLevel()

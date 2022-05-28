@@ -4282,6 +4282,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1886485186930963056, guid: cb0aedef3634f3d45abfbb9531c1bad0, type: 3}
   m_PrefabInstance: {fileID: 454216024}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &454216026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1886485186930963063, guid: cb0aedef3634f3d45abfbb9531c1bad0, type: 3}
+  m_PrefabInstance: {fileID: 454216024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &457396952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11917,30 +11922,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 20
-    rate: 2
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 25
-    rate: 2
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 30
-    rate: 2
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 20
-    rate: 3
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 25
-    rate: 3
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 30
-    rate: 3
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
+  - enemy: {fileID: 5049442360137993944, guid: 4b696023afb4c0645b7ed511101ebb47, type: 3}
     amount: 40
+    rate: 1
+  - enemy: {fileID: 5049442360137993944, guid: 4b696023afb4c0645b7ed511101ebb47, type: 3}
+    amount: 60
+    rate: 2
+  - enemy: {fileID: 5049442360137993944, guid: 2786198fbf3787e41850e8304e476d79, type: 3}
+    amount: 50
+    rate: 2
+  - enemy: {fileID: 5049442360137993944, guid: 2786198fbf3787e41850e8304e476d79, type: 3}
+    amount: 70
+    rate: 2
+  - enemy: {fileID: 5049442360137993944, guid: 2786198fbf3787e41850e8304e476d79, type: 3}
+    amount: 100
     rate: 2
   - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 40
+    amount: 50
     rate: 2
+  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
+    amount: 50
+    rate: 3
+  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
+    amount: 60
+    rate: 3
   - enemy: {fileID: 5049442360137993944, guid: f2f9afd73ae707e48a1297acb4fba4eb, type: 3}
     amount: 3
     rate: 0.1
@@ -11995,8 +12000,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a81f0838e1e554c84f54dc8d43159a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMoney: 6000
-  startLives: 20
+  startMoney: 8000
+  startLives: 30
 --- !u!114 &1231393130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12009,8 +12014,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c2a4ee86b02ff48a43313bb0c83b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverUI: {fileID: 4093611694314234044, guid: 4905dbe428d32e44e926c10fae63dcf0, type: 3}
-  completeLevelUI: {fileID: 1886485186930963063, guid: cb0aedef3634f3d45abfbb9531c1bad0, type: 3}
+  gameOverUI: {fileID: 4093611694179782057}
+  completeLevelUI: {fileID: 454216026}
 --- !u!114 &1231393131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12024,7 +12029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnToMenu: MainMenu
-  sceneFader: {fileID: 8223615485666553685, guid: 2caaff2b0495d47438141f824d95f1cf, type: 3}
+  sceneFader: {fileID: 1257320836}
   ui: {fileID: 1713748256}
   menuSceneName: MainMenu
 --- !u!1001 &1239566244
@@ -19327,6 +19332,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4905dbe428d32e44e926c10fae63dcf0, type: 3}
+--- !u!1 &4093611694179782057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4093611694314234044, guid: 4905dbe428d32e44e926c10fae63dcf0, type: 3}
+  m_PrefabInstance: {fileID: 4093611694179782056}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4858872927684808111
 PrefabInstance:
   m_ObjectHideFlags: 0

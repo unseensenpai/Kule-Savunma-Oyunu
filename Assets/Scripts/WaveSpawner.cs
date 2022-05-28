@@ -32,8 +32,6 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveIndex == waves.Length)
         {
-
-            Debug.Log("Geliyor mu?");
             gameManager.WinLevel();
             this.enabled = false;
         }

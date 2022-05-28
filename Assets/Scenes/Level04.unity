@@ -11815,9 +11815,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - enemy: {fileID: 5049442360137993944, guid: c254925707d705d4886f4dc5638641b8, type: 3}
-    amount: 5
-    rate: 1
+  - enemy: {fileID: 5049442360137993944, guid: f2f9afd73ae707e48a1297acb4fba4eb, type: 3}
+    amount: 2
+    rate: 0.000001
   timeBetweenWaves: 5
   countdown: 5
   spawnPoint: {fileID: 1148428150}
@@ -11866,8 +11866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a81f0838e1e554c84f54dc8d43159a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMoney: 6000
-  startLives: 20
+  startMoney: 100000
+  startLives: 99
 --- !u!114 &1231393130
 MonoBehaviour:
   m_ObjectHideFlags: 0
